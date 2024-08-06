@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+        }
+
+        .calculator {
+            border: 1px solid #000;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .display {
+            background: #222;
+            color: #fff;
+            text-align: right;
+            padding: 20px;
+            font-size: 2em;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        .btn {
+            padding: 20px;
+            font-size: 1.5em;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            background: #f9f9f9;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background: #e0e0e0;
+        }
+
+        #clear {
+            grid-column: span 2;
+            background: #ff4d4d;
+            color: white;
+        }
+
+        #equals {
+            grid-column: span 2;
+            background: #4caf50;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <div class="display" id="display">0</div>
+        <div class="buttons">
+            <button class="btn" data-num="7">7</button>
+            <button class="btn" data-num="8">8</button>
+            <button class="btn" data-num="9">9</button>
+            <button class="btn" data-op="/">/</button>
+
+            <button class="btn" data-num="4">4</button>
+            <button class="btn" data-num="5">5</button>
+            <button class="btn" data-num="6">6</button>
+            <button class="btn" data-op="*">*</button>
+
+            <button class="btn" data-num="1">1</button>
+            <button class="btn" data-num="2">2</button>
+            <button class="btn" data-num="3">3</button>
+            <button class="btn" data-op="-">-</button>
+
+            <button class="btn" data-num="0">0</button>
+            <button class="btn" id="clear">C</button>
+            <button class="btn" data-op="+">+</button>
+            <button class="btn" id="equals">=</button>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const display = document.getElementById('display');
+            const buttons = document.querySelectorAll('.btn');
+
+            buttons.forEach(button => {
+                button.addEventListener('click', () => {
+                    if(button.dataset.num) {
+                        display.textContent = display.textContent === '0' ? button.dataset.num : display.textContent + button.dataset.num;
+                    } else if(button.dataset.op) {
+                        display.textContent += ` ${button.dataset.op} `;
+                    } else if(button.id === 'clear') {
+                        display.textContent = '0';
+                    } else if(button.id === 'equals') {
+                        display.textContent = eval(display.textContent);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
